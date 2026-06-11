@@ -1,0 +1,184 @@
+/* ============================================================
+   RESTORED SPACES — Colors & Type Foundations
+   Home decluttering & organizing · Vacaville & Solano County
+   ============================================================ */
+
+/* ---------- FONTS (self-hosted woff, latin subset) ----------
+   Fallback: link Google Fonts if you prefer the full charset:
+   https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap
+*/
+@font-face { font-family:'Cormorant Garamond'; font-style:normal; font-weight:300; font-display:swap; src:url('fonts/CormorantGaramond-300.woff') format('woff'); }
+@font-face { font-family:'Cormorant Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/CormorantGaramond-400.woff') format('woff'); }
+@font-face { font-family:'Cormorant Garamond'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/CormorantGaramond-500.woff') format('woff'); }
+@font-face { font-family:'Cormorant Garamond'; font-style:italic; font-weight:400; font-display:swap; src:url('fonts/CormorantGaramond-400italic.woff') format('woff'); }
+@font-face { font-family:'Jost'; font-style:normal; font-weight:300; font-display:swap; src:url('fonts/Jost-300.woff') format('woff'); }
+@font-face { font-family:'Jost'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/Jost-400.woff') format('woff'); }
+@font-face { font-family:'Jost'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/Jost-500.woff') format('woff'); }
+
+:root {
+  /* ---------- BRAND PALETTE ---------- */
+  --cream:       #F7F3ED;  /* page background — warm off-white */
+  --linen:       #EDE6DA;  /* secondary surface / image placeholders */
+  --white:       #FDFAF6;  /* cards & raised surfaces (a warm white) */
+  --sage:        #7D9B76;  /* primary brand green */
+  --sage-dark:   #5A7354;  /* darker green — dark sections, logo mark, hover */
+  --sage-light:  #A8C1A2;  /* light green — accents on dark, checks */
+  --warm-brown:  #8B6F5C;  /* warm secondary accent (rare) */
+  --text:        #2E2A25;  /* primary ink — near-black warm brown */
+  --text-muted:  #6B6259;  /* secondary text — muted taupe */
+  --error:       #C45C5C;  /* validation only */
+  --border:      rgba(125, 155, 118, 0.25); /* sage @ 25% — hairline dividers */
+
+  /* ---------- SEMANTIC COLOR ROLES ---------- */
+  --bg:           var(--cream);
+  --bg-alt:       var(--white);
+  --bg-inverse:   var(--sage-dark);
+  --surface:      var(--white);
+  --surface-soft: var(--linen);
+  --fg1:          var(--text);        /* primary text */
+  --fg2:          var(--text-muted);  /* secondary text */
+  --fg-on-dark:   var(--cream);
+  --fg-on-dark-muted: rgba(247,243,237,0.85);
+  --accent:       var(--sage);
+  --accent-press: var(--sage-dark);
+  --hairline:     var(--border);
+
+  /* ---------- TYPE FAMILIES ---------- */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif; /* display / headings */
+  --font-sans:  'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* body / UI */
+
+  /* ---------- TYPE SCALE (fluid) ---------- */
+  --fs-display: clamp(2.8rem, 4.5vw, 4rem);   /* @kind font */ /* hero H1 */
+  --fs-h1:      clamp(2rem, 3.5vw, 3rem);     /* @kind font */ /* section headings */
+  --fs-h2:      clamp(1.6rem, 2.5vw, 2.2rem); /* @kind font */ /* sub headings / pull quotes */
+  --fs-h3:      1.4rem;  /* @kind font */                      /* card titles */
+  --fs-lead:    1.05rem; /* @kind font */                      /* intro / lead paragraph */
+  --fs-body:    0.95rem; /* @kind font */                       /* default body */
+  --fs-small:   0.88rem; /* @kind font */
+  --fs-eyebrow: 0.72rem; /* @kind font */                       /* uppercase tags / eyebrows */
+
+  /* ---------- WEIGHTS ---------- */
+  --w-light: 300; /* @kind font */
+  --w-reg:   400; /* @kind font */
+  --w-med:   500; /* @kind font */
+
+  /* ---------- LINE HEIGHTS ---------- */
+  --lh-tight:  1.15; /* @kind font */ /* display */
+  --lh-snug:   1.25; /* @kind font */ /* headings */
+  --lh-body:   1.7;  /* @kind font */ /* paragraphs */
+  --lh-loose:  1.8;  /* @kind font */ /* lead paragraphs */
+
+  /* ---------- LETTER SPACING ---------- */
+  --ls-eyebrow: 0.2em;  /* @kind font */ /* section tags */
+  --ls-label:   0.12em; /* @kind font */ /* nav links, buttons */
+  --ls-wide:    0.15em; /* @kind font */ /* badges */
+  --ls-display: 0.02em; /* @kind font */
+
+  /* ---------- RADII ---------- */
+  --r-sharp:  2px;    /* inputs, small chips */
+  --r-card:   3px;    /* cards, sections, form wrapper (signature soft-square) */
+  --r-soft:   12px;   /* hero feature cards, icon tiles */
+  --r-pill:   100px;  /* buttons, badges */
+  --r-round:  50%;    /* avatars, icon circles */
+
+  /* ---------- SPACING SCALE ---------- */
+  --sp-1: 0.4rem;
+  --sp-2: 0.75rem;
+  --sp-3: 1rem;
+  --sp-4: 1.5rem;
+  --sp-5: 2rem;
+  --sp-6: 2.5rem;
+  --sp-7: 3rem;
+  --sp-section: 7rem;  /* vertical rhythm between major sections */
+  --container: 1160px; /* max content width */
+
+  /* ---------- ELEVATION ---------- */
+  --shadow-card:  0 4px 20px rgba(0,0,0,0.06);   /* hover lift on light cards */
+  --shadow-raise: 0 8px 40px rgba(0,0,0,0.05);   /* form / floating panels */
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.08);  /* service card hover */
+
+  /* ---------- MOTION ---------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --dur-fast: 0.2s; /* @kind other */
+  --dur-base: 0.3s; /* @kind other */
+  --dur-slow: 0.7s; /* @kind other */
+}
+
+/* ============================================================
+   SEMANTIC TYPOGRAPHY  (apply directly, or copy the rules)
+   ============================================================ */
+.rs-body {
+  font-family: var(--font-sans);
+  font-weight: var(--w-light);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg1);
+}
+
+.rs-display {           /* hero headline */
+  font-family: var(--font-serif);
+  font-weight: var(--w-light);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  color: var(--fg1);
+}
+.rs-display em { font-style: italic; color: var(--accent); }
+
+.rs-h1 {                /* section heading */
+  font-family: var(--font-serif);
+  font-weight: var(--w-light);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+}
+.rs-h1 em { font-family: var(--font-serif); font-style: italic; color: var(--accent); }
+
+.rs-h2 {                /* pull quote / large italic */
+  font-family: var(--font-serif);
+  font-weight: var(--w-light);
+  font-style: italic;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+}
+
+.rs-h3 {                /* card title */
+  font-family: var(--font-serif);
+  font-weight: var(--w-reg);
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  color: var(--fg1);
+}
+
+.rs-lead {              /* intro paragraph */
+  font-family: var(--font-sans);
+  font-weight: var(--w-light);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-loose);
+  color: var(--fg2);
+}
+
+.rs-p {                 /* default paragraph */
+  font-family: var(--font-sans);
+  font-weight: var(--w-light);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg2);
+}
+
+.rs-eyebrow {           /* uppercase section tag */
+  font-family: var(--font-sans);
+  font-weight: var(--w-med);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.rs-label {             /* form labels, nav, buttons */
+  font-family: var(--font-sans);
+  font-weight: var(--w-reg);
+  font-size: 0.75rem;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg2);
+}
