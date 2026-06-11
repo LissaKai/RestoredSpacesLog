@@ -227,8 +227,24 @@
       el.addEventListener('input', function () { c.contact[key] = el.value; save(); showSaved(); });
       el.addEventListener('change', function () { c.contact[key] = el.value; save(); showSaved(); renderSidebar(); });
     }
-    bind('dPhone', 'phone'); bind('dEmail', 'email'); bind('dAddress', 'address');
+    bind('dEmail', 'email'); bind('dAddress', 'address');
     bind('dSource', 'source'); bind('dStatus', 'status'); bind('dNeeds', 'needs');
+    // phone: live-format as (xxx) xxx-xxxx
+    var phoneEl = document.getElementById('dPhone');
+    phoneEl.addEventListener('input', function () {
+      var caretEnd = phoneEl.selectionStart === phoneEl.value.length;
+      phoneEl.value = fmtPhone(phoneEl.value);
+      c.contact.phone = phoneEl.value; save(); showSaved();
+      if (caretEnd) { try { phoneEl.setSelectionRange(phoneEl.value.length, phoneEl.value.length); } catch (e) {} }
+    });
+    phoneEl.addEventListener('change', function () { c.contact.phone = phoneEl.value; save(); renderSidebar(); });
+  }
+
+  function fmtPhone(v) {
+    var d = String(v || '').replace(/\D/g, '').slice(0, 10);
+    if (d.length < 4) return d;
+    if (d.length < 7) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
+    return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
   }
 
   var savedT;
@@ -254,7 +270,7 @@
         '<h3>Invoice Details</h3>' +
         '<div class="frow">' +
           '<div class="field"><label>Invoice date</label><input type="date" id="iDate" value="' + esc(inv.date || todayISO()) + '"></div>' +
-          '<div class="field"><label>Flat project price <span style="text-transform:none;letter-spacing:0;color:var(--text-muted);">(optional)</span></label><div class="fee-wrap"><span>$</span><input type="number" id="iPrice" min="0" step="1" value="' + esc(inv.projectPrice) + '" placeholder="leave blank to use logged fees"></div></div>' +
+          '<div class="field"><label>Flat project price</label><div class="fee-wrap"><span>$</span><input type="number" id="iPrice" min="0" step="1" value="' + esc(inv.projectPrice) + '" placeholder="0"></div><span style="display:block;font-size:0.72rem;color:var(--text-muted);margin-top:5px;text-transform:none;letter-spacing:0;">(optional) — blank uses logged fees</span></div>' +
           '<div class="field"><label>Deposit received</label><div class="fee-wrap"><span>$</span><input type="number" id="iDeposit" min="0" step="1" value="' + esc(inv.deposit) + '" placeholder="0"></div></div>' +
         '</div>' +
         '<label style="display:block;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:6px;">Payment status</label>' +
@@ -316,6 +332,7 @@
     L.push((inv.paid ? 'PAID IN FULL' : 'Balance due') + ': ' + money(inv.paid ? 0 : balance));
     L.push('');
     L.push('Thank you! — Restored Spaces');
+    L.push('Questions? Call or text (559) 777-0748');
     L.push('restoredspacesco.com · @restoredspacesco');
     return L.join('\n');
   }
@@ -437,6 +454,7 @@
     // footer
     doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(107, 98, 89);
     doc.text('Thank you!  Restored Spaces \u2014 restoring peace to your home, one space at a time.', L, 762);
+    doc.setTextColor(46, 42, 37); doc.text('Questions? Call or text (559) 777-0748', L, 776);
 
     // share or save
     var fname = 'Invoice - ' + (c.name || 'Client').replace(/[^\w \-]/g, '') + '.pdf';
@@ -499,7 +517,7 @@
         (deposit ? '<div class="inv-trow"><span>Deposit received</span><span class="amt">\u2212 ' + money(deposit) + '</span></div>' : '') +
         '<div class="inv-trow due"><span class="lab">' + (inv.paid ? 'Paid in full' : 'Balance due') + '</span><span class="amt">' + money(inv.paid ? 0 : balance) + '</span></div>' +
       '</div>' +
-      '<div class="inv-foot">Thank you! Please send payment at your convenience. Restored Spaces \u2014 restoring peace to your home, one space at a time.</div>';
+      '<div class="inv-foot">Thank you! Please send payment at your convenience. Restored Spaces \u2014 restoring peace to your home, one space at a time.<br><span style="color:var(--text);">Questions? Call or text (559) 777-0748</span></div>';
   }
 
   function renderAll() { renderSidebar(); renderMain(); renderBackupBar(); }
