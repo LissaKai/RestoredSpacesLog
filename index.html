@@ -112,6 +112,7 @@
   .form-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px 24px; margin-bottom: 34px; box-shadow: var(--shadow-card); }
   .form-card h3 { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--warm-brown); font-weight: 500; margin-bottom: 18px; }
   .frow { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .frow input[type="date"] { max-width: 150px; }
   .field label { display: block; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); font-weight: 500; margin-bottom: 6px; }
   .field input, .field textarea {
     width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 8px;
@@ -294,6 +295,7 @@
     .form-card { padding: 20px 18px 22px; }
     .frow { grid-template-columns: 1fr 1fr; gap: 12px; }
     .frow .field:first-child { grid-column: 1 / -1; }
+    .frow input[type="date"] { max-width: 160px; }
     .field input, .field textarea { font-size: 16px; padding: 13px 14px; }
     .fee-wrap input { padding-left: 28px; }
     .form-actions .btn-primary { width: 100%; padding: 15px; font-size: 0.9rem; }
