@@ -57,6 +57,7 @@
   var FOLDER = '<svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
 
   // ---------- render: sidebar ----------
+  var clientFilter = '';
   function renderSidebar() {
     var list = document.getElementById('clientList');
     if (!data.clients.length) {
@@ -64,6 +65,14 @@
       return;
     }
     var sorted = data.clients.slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+    if (clientFilter) {
+      var q = clientFilter.toLowerCase();
+      sorted = sorted.filter(function (c) { return c.name.toLowerCase().indexOf(q) > -1; });
+    }
+    if (!sorted.length) {
+      list.innerHTML = '<div class="empty-clients">No clients match “' + esc(clientFilter) + '”.</div>';
+      return;
+    }
     list.innerHTML = sorted.map(function (c) {
       ensureClient(c);
       var t = clientTotals(c);
@@ -81,7 +90,7 @@
   }
 
   // ---------- render: main ----------
-  var activeTab = 'sessions';
+  var activeTab = 'details';
 
   function renderMain() {
     var main = document.getElementById('main');
@@ -114,7 +123,7 @@
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Print</button>' +
           '<button class="icon-btn danger" id="delClientBtn">Delete</button>' +
         '</div></div>' +
-        '<div class="tabs">' + tabBtn('sessions', 'Sessions') + tabBtn('details', 'Details') + tabBtn('invoice', 'Invoice') + '</div>' +
+        '<div class="tabs">' + tabBtn('details', 'Details') + tabBtn('sessions', 'Sessions') + tabBtn('invoice', 'Invoice') + '</div>' +
         '<div id="tabContent"></div>' +
       '</div>';
 
@@ -609,7 +618,7 @@
   // ---------- actions ----------
   function selectClient(id) {
     selectedId = id;
-    activeTab = 'sessions';
+    activeTab = 'details';
     localStorage.setItem(SELKEY, id);
     document.body.setAttribute('data-view', 'detail');
     renderAll();
@@ -716,6 +725,10 @@
 
   // ---------- bind global ----------
   document.getElementById('addClientBtn').addEventListener('click', function () { openModal('add'); });
+  (function () {
+    var s = document.getElementById('clientSearch');
+    if (s) s.addEventListener('input', function () { clientFilter = s.value.trim(); renderSidebar(); });
+  })();
   document.getElementById('importFile').addEventListener('change', function (e) {
     if (e.target.files && e.target.files[0]) { importBackup(e.target.files[0]); e.target.value = ''; }
   });
